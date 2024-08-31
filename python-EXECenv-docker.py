@@ -15,16 +15,16 @@ try:
         volumes={
             current_directory: {'bind': '/app', 'mode': 'ro'} # Mount local files to the app directory of the container.
         },
-        command='ls /app',
+        command='python /app/script.py',
         detach=True
     )
 
     # Wait for the container to finish and retrieve logs
     container.wait()
-    result = container.logs()
-
+    container_logs = container.logs()
+    result = container_logs.decode('utf-8')
     # Print the logs
-    print(result.decode('utf-8'))
+    print(result)
 
 
 finally:
